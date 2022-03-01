@@ -1,0 +1,64 @@
+---
+layout: compress
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include head.html %}
+</head>
+<body>
+    {% if site.gtm %}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ site.gtm }}"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    {% endif %}
+    <!-- Nav -->
+    {% include nav.html %}
+    {% if layout.content-id %}
+    {% assign content-id = layout.content-id %}
+    {% endif %}
+    {% if page.content-id %}
+    {% assign content-id = page.content-id %}
+    {% endif %}
+    <!-- Page Content -->
+    <main id="{{ content-id }}">
+    {{ content }}
+    </main>
+    <!-- Footer -->
+    {% include footer.html %}
+    <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Cookies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js" integrity="sha512-Meww2sXqNHxI1+5Dyh/9KAtvI9RZSA4c1K2k5iL02oiPO/RH3Q30L3M1albtqMg50u4gRTYdV4EXOQqXEI336A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {% if page.slick == true or layout.slick == true %}
+    <!-- Slick -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    {% endif %}
+    {% if page.social-share == true or layout.social-share == true %}
+    <!-- Social Share -->
+    <script src="/js/min/social-share.min.js"></script>
+    {% endif %}
+    <!-- Sitewide scripts  -->
+    {%- capture sitewide-js -%}
+        /js/min/site_functions.min.js?{{site.time | date: '%s'}}
+    {%- endcapture -%}
+	<script src="{{ sitewide-js | relative_url }}"></script>
+    <!-- Layout -->
+    {% if layout.scripts %}
+    {% for script in layout.scripts %}
+    {% capture script-path %}/js/min/{{ script }}.min.js?{{site.time | date: '%s'}}{% endcapture %}
+    <script src="{{ script-path | relative_url }}"></script>
+    {% endfor %}
+    {% endif %}
+    <!-- Page -->
+    {% if page.scripts %}
+    {% for script in page.scripts %}
+    {% capture script-path %}/js/min/{{ script }}.min.js?{{site.time | date: '%s'}}{% endcapture %}
+    <script src="{{ script-path | relative_url }}"></script>
+    {% endfor %}
+    {% endif %}
+    <!-- End Scripts -->
+</body>
+</html>

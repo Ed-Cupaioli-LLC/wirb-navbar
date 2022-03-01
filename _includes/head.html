@@ -1,0 +1,116 @@
+{% if site.gtm %}
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','{{ site.gtm }}');</script>
+<!-- End Google Tag Manager -->
+{% endif %}
+<meta charset="utf-8">
+{% if page.url == "/404.html" %}
+<meta http-equiv="refresh" content="3; url=/">
+{% endif %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Title and Meta Text -->
+{% if page.title %}
+{% capture title  %}
+{{page.title}} | {{site.title}}
+{% endcapture %}
+{% else %}
+{% assign title = site.title %}
+{% endif %}
+
+{% if page.description %}
+{% assign description = page.description%}
+{% else %}
+{% assign description = site.description %}
+{% endif %}
+
+{% if page.meta_img %}
+{% assign meta_img = page.meta_img %}
+{% else %}
+{% assign meta_img = site.meta_img %}
+{% endif %}
+<title>{{ title }}</title>
+<meta content="{{ description }}" name="description">
+<link rel="canonical" href="{{ site.url }}{{ page.url | remove: ".html" }}" />
+<!-- Facebook Meta -->
+<meta property="og:url" content="{{ site.url }}{{ page.url | remove: ".html" }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:image" content="{{ meta_img }}">
+<!-- Twitter Meta -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="{{ site.twitter }}">
+<meta name="twitter:creator" content="{{ site.twitter }}">
+<meta name="twitter:title" content="{{ site.title }}">
+<meta name="twitter:description" content="{{ description }}">
+<meta name="twitter:image" content="{{ meta_img }}">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "{{ site.schema.type }}",
+    "name": "{{ site.schema.name }}",
+    "image": "{{site.url}}{{ site.schema.image }}",
+    "logo": "{{ site.url }}{{site.schema.logo }}",
+    "url": "{{ site.url }}",
+    "telephone": "{{ site.schema.phone }}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ site.schema.location.address }}",
+      "addressLocality": "{{ site.schema.location.city }}",
+      "addressRegion": "{{ site.schema.location.state }}",
+      "postalCode": "{{ site.schema.location.zip }}",
+      "addressCountry": "USA"
+    },
+    {% if site.schema.hours.days != '' %}
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+      {{ site.schema.hours.days | split: "," | join: "," }}
+      ],
+      "opens": "{{ site.schema.hours.open }}",
+      "closes": "{{ site.schema.hours.close }}"
+    },
+    {% endif %}
+    "sameAs": 
+    {{ site.schema.social | split: "," | join: "," }}
+    
+  }
+  </script>
+{% if page.slick == true or layout.slick == true %}
+<!-- Slick -->
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="/css/slick.min.css?{{site.time | date: '%s'}}" />
+{% endif %}
+<!-- Base CSS -->
+{%- capture base-css -%}
+/css/style.min.css?{{site.time | date: '%s'}}
+{%- endcapture -%}
+<link href="{{ base-css | relative_url }}" rel="stylesheet" type="text/css">
+<!-- Layout CSS -->
+{% if layout.css %}
+{%- capture css-path -%}
+  /css/{{ layout.css }}.min.css?{{site.time | date: '%s'}}
+{%- endcapture -%}
+<link rel="stylesheet" href="{{ css-path | trim | relative_url }}">
+{% endif %}
+<!-- Page CSS --> 
+{% if page.css %}
+{%- capture css-path -%}
+  /css/{{ page.css }}.min.css?{{site.time | date: '%s'}}
+{%- endcapture -%}
+<link rel="stylesheet" href="{{ css-path | trim | relative_url }}">
+{% endif %}
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+<!-- Favicon -->
+<link rel="icon" href="{{ site.favicon | relative_url }}">
+{% if page.social-share == true or layout.social-share == true %}
+<!-- Social Share -->
+<script type="text/javascript" async="" src="https://platform.twitter.com/widgets.js"></script>
+<script> window.fbAsyncInit = function() { FB.init({ appId : '227787841708160', autoLogAppEvents : true, xfbml : true, version : 'v8.0' }); }; </script>
+<script async="" defer="" crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+{% endif %}

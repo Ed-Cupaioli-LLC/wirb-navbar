@@ -1,0 +1,54 @@
+---
+title: 
+description: 
+meta_img:
+twitter:
+favicon:
+url:
+gtm:
+schema:
+  name: 
+  type: 
+  image: 
+  logo:
+  phone: 
+  email: 
+  social:
+  location: 
+    address: 
+    city: 
+    state: 
+    zip: 
+  hours:
+    days:
+    opens:
+    closes:  
+timezone: America/New_York
+future: true
+markdown: kramdown
+kramdown:
+  auto_ids: false
+exclude:
+- Gemfile
+- Gemfile.lock
+- node_modules
+- gruntfile.js
+sass:
+  sass_dir: _sass
+  style: compressed
+plugins:
+  - jekyll-sitemap
+collections:
+  pages: 
+    output: true
+  redirects:
+    output: true    
+defaults:
+- scope:
+    type: 'pages'
+  values:
+    layout: default
+- scope:
+    type: 'redirects'
+  values:
+    layout: redirect    
