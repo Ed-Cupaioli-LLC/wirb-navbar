@@ -1,0 +1,92 @@
+@import "vars.scss";
+@import "mixins.scss";
+
+.site-nav {
+  background-color: $blue2;
+  padding: 1rem;
+  &__body {
+    display: flex;
+    justify-content: space-between;
+    max-width: $size-x-large;
+    margin: auto;
+  }
+  //Logo col
+  &__logo-col {
+
+  }
+  &__logo {
+    height: 65px;
+    width: auto;
+  }
+  //Link toggle
+  &__link-toggle {
+    display: none;
+    @include bp-large {
+      display: block;
+    }
+    &-line {
+      $lineHeight: 2px;
+      background-color: $white;
+    }
+  }
+  
+
+  //Links col
+  &__links-col {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  &__links-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 18px;
+    li {
+      line-height: normal;
+    }
+  }
+  &__link {
+    color: $white;
+    font-weight: 700;
+    font-size: 20px;
+  }
+  &__search-form {
+    position: absolute;
+    z-index: -1;
+  }
+  &__buttons {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    .button {
+      border: 1px solid $red;
+      background-color: $red;
+      color: $white;
+      text-transform: uppercase;
+      padding: 10px 15px;
+      line-height: normal;
+      font-weight: 700;
+      font-family: inherit;
+      font-size: 18px;
+      @include transition(border-color,background-color,color);
+      &:hover {
+        background: darken($red,10%);
+        border-color: darken($red,10%);
+      }
+      &--alt {
+        text-transform: none;
+        background-color: transparent;
+        background-color: $blue2;
+        border-color: $white;
+        &:hover {
+          background-color: $white;
+          color: $blue2;
+          border-color: $white;
+        }
+      }
+    }
+  }
+  
+}

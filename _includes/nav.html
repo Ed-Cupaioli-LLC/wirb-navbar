@@ -1,1 +1,56 @@
-<nav></nav>
+{% assign menu = site.data.menu %}
+<nav class="site-nav">
+  <div class="site-nav__body">
+    <div class="site-nav__logo-col">
+      <a href="/">
+        <img class="site-nav__logo" alt="Washington Independent Review of Books Logo" src="/assets/images/header-logo.png" aria-label="Home" />
+      </a>
+    </div>
+    <div class="site-nav__link-toggle">
+      <div class="site-nav__toggle-line top"></div>
+      <div class="site-nav__toggle-line middle"></div>
+      <div class="site-nav__toggle-line bottom"></div>
+    </div>
+    <div class="site-nav__links-col">
+      <ul class="site-nav__links-list" role="tablist">
+          {% for link in menu.links %}
+            <li role="tab" id="tab{{ forloop.index }}">
+              <a class="site-nav__link" href="{{link.url}}">{{ link.title }}</a>
+            </li>
+          {% endfor %}
+          <li class="site-nav__search" role="tab" id="search-tab">
+            <a href="#" class="site-nav__search-toggle" aria-label="Toggle search">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.543 17.3302L14.8672 12.6549C15.9305 11.0765 16.4551 9.10448 16.1742 7.00315C15.6953 3.42892 12.7656 0.520244 9.18749 0.0672841C3.86755 -0.605808 -0.605907 3.86715 0.0672989 9.18651C0.520426 12.7658 3.42981 15.6975 7.00482 16.174C9.10639 16.4548 11.0791 15.9305 12.6572 14.8672L17.333 19.5424C17.9431 20.1525 18.9326 20.1525 19.5428 19.5424C20.1524 18.9316 20.1524 17.9395 19.543 17.3302ZM3.08981 8.12412C3.08981 5.36738 5.33279 3.12465 8.08983 3.12465C10.8469 3.12465 13.0898 5.36738 13.0898 8.12412C13.0898 10.8809 10.8469 13.1236 8.08983 13.1236C5.33279 13.1236 3.08981 10.8816 3.08981 8.12412Z" fill="white"/>
+              </svg>
+            </a>
+            
+          </li>
+          <form class="site-nav__search-form" method="post" action="http://www.washingtonindependentreviewofbooks.com/index.php">
+            <div class="hiddenFields">
+            <input type="hidden" name="params" value="eyJyZXN1bHRfcGFnZSI6ImNvbnRlbnRcL3NlYXJjaC1yZXN1bHRzXC8lcyJ9">
+            <input type="hidden" name="ACT" value="18">
+            <input type="hidden" name="site_id" value="1">
+            <input type="hidden" name="csrf_token" value="fdfc25389bfbcb53c6bfdc3c331e00dadc3d9932">
+            </div>
+            <fieldset>
+                <input class="site-nav__search-input" name="keywords" type="text" placeholder="Search..." value="">
+            </fieldset>
+          </form>
+      </ul>
+      <div class="site-nav__buttons">
+        <a href="#" class="site-nav__subscribe-toggle button button--alt">Subscribe</a>
+        <a href="/page/donate" class="button">Donate</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="subscribe">
+  <div class="subscribe__body">
+    <form class="subscribe__form">
+      <div class="subscribe__form-body"></div>
+      <div class="subscribe__form-success"></div>
+      <div class="subscribe__form-error"></div>
+    </form>
+  </div>
+</div>
