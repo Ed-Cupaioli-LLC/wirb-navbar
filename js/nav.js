@@ -43,6 +43,15 @@ document.addEventListener('click',function(e) {
     document.querySelector(".search-form").classList.remove("active");
     document.querySelector(".site-nav__search-toggle").classList.remove("active");
   }
+  //mobile nav 
+  const mobileNavToggleTarget = e.target.closest(".site-nav__link-toggle");
+  const mobileNavToggle = document.querySelector(".site-nav__link-toggle");
+  const mobileNavTarget = e.target.closest(".mobile-menu.active *");
+  const mobileNav = document.querySelector(".mobile-menu");
+  if (mobileNavTarget === null && mobileNavToggleTarget === null) {
+      mobileNav.classList.remove("active");
+      mobileNavToggle.classList.remove("active");
+  }
 });
 
 //toggle subscribe form
@@ -106,8 +115,14 @@ $(".subscribe-dropdown__form").submit(function (e) {
 function toggleMenu() {
   const linkToggle = document.querySelector(".site-nav__link-toggle");
   const linksCol = document.querySelector(".mobile-menu");
-  linkToggle.classList.toggle("active");
-  linksCol.classList.toggle("active");
+  if (linkToggle.classList.contains('active')) {
+    linkToggle.classList.remove("active");
+    linksCol.classList.remove("active");
+  } else {
+    linkToggle.classList.add("active");
+    linksCol.classList.add("active");
+  }
+  
 }
 
   
