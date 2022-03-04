@@ -88,12 +88,30 @@
     align-items: center;
     li {
       line-height: normal;
+      
     }
   }
   &__link {
     color: $white;
     font-weight: 700;
     font-size: 20px;
+    display: inline-block;
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      bottom: -2px;
+      width: 0%;
+      height: 2px;
+      background-color: $red;
+      @include transition(width);
+    }
+    &:hover {
+      &:after {
+        width: 100%;
+      }
+    }
   }
   $searchToggle: 36px;
   &__search {
@@ -174,6 +192,7 @@
     &:hover {
       background: darken($red,10%);
       border-color: darken($red,10%);
+      cursor: pointer;
     }
     &--alt {
       text-transform: none;
