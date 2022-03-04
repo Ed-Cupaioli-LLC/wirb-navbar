@@ -2,17 +2,32 @@
 @import "mixins.scss";
 
 .site-nav {
-  background-color: $blue2;
-  padding: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
   &__body {
+    background-color: $blue2;
+    padding: 1rem;
+    z-index: 1;
+    position: relative;
+    @include transition(background-color);
+    @include bp-large {
+      background-color: $blue3;
+    }
+  }
+  &__grid {
     display: flex;
     justify-content: space-between;
-    max-width: $size-x-large;
+    align-items: center;
     margin: auto;
+    max-width: $size-x-large;
   }
   //Logo col
   &__logo-col {
-
+    position: relative;
+    z-index: 1;
   }
   &__logo {
     height: 65px;
@@ -21,12 +36,35 @@
   //Link toggle
   &__link-toggle {
     display: none;
+    &:hover {
+      cursor: pointer;
+    }
     @include bp-large {
       display: block;
     }
+    $lineHeight: 2px;
+    $lineMargin: 6px;
     &-line {
-      $lineHeight: 2px;
+      
       background-color: $white;
+      height: $lineHeight;
+      width: 28px;
+      @include transition(transform);
+      &.middle {
+        margin: #{$lineMargin} 0;
+      }
+    }
+    &.active {
+      $toggle-translate: #{$lineMargin + $lineHeight};
+      .top {
+        transform: translateY($toggle-translate) rotate(135deg) ;
+      }
+      .middle {
+        transform: scale(0);
+      }
+      .bottom {
+        transform: translateY(-#{$toggle-translate}) rotate(-135deg);
+      }
     }
   }
   
@@ -36,6 +74,9 @@
     display: flex;
     align-items: center;
     gap: 18px;
+    @include bp-large {
+      display: none;
+    }
   }
   &__links-list {
     margin: 0;
@@ -43,6 +84,8 @@
     list-style: none;
     display: flex;
     gap: 18px;
+    position: relative;
+    align-items: center;
     li {
       line-height: normal;
     }
@@ -52,41 +95,266 @@
     font-weight: 700;
     font-size: 20px;
   }
-  &__search-form {
-    position: absolute;
-    z-index: -1;
+  $searchToggle: 36px;
+  &__search {
+    .search-form {
+      position: absolute;
+      overflow: hidden;
+      top: 0;
+      right: $searchToggle;
+      border: 0;
+      width: 0;
+      @include transition(width);
+      input[type="submit"] {
+        display: none;
+      }
+      &.active {
+        width: calc(100% - #{$searchToggle});
+      }
+    }
   }
+  &__search-toggle {
+    height: $searchToggle;
+    width: $searchToggle;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    @include transition(background-color);
+    svg {
+      position: absolute;
+      transform: translate(-50%,-50%);
+      top: 50%;
+      left: 50%;
+    }
+    &.active {
+      background-color: $red;
+    }
+  }
+  
   &__buttons {
     display: flex;
     gap: 18px;
     align-items: center;
-    .button {
-      border: 1px solid $red;
-      background-color: $red;
-      color: $white;
-      text-transform: uppercase;
-      padding: 10px 15px;
-      line-height: normal;
-      font-weight: 700;
+    
+  }
+  $searchHeight: 36px;
+  .search-form {
+    
+    fieldset {
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
+    label {
+      display: none;
+    }
+    input {
+      border: 0;
       font-family: inherit;
-      font-size: 18px;
-      @include transition(border-color,background-color,color);
-      &:hover {
-        background: darken($red,10%);
-        border-color: darken($red,10%);
-      }
-      &--alt {
-        text-transform: none;
-        background-color: transparent;
-        background-color: $blue2;
+      width: 100%;
+      height: $searchHeight;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+
+    }
+  } 
+  .button {
+    border: 1px solid $red;
+    background-color: $red;
+    color: $white;
+    text-transform: uppercase;
+    padding: 10px 15px;
+    line-height: normal;
+    font-weight: 700;
+    font-family: inherit;
+    font-size: 18px;
+    @include transition(border-color,background-color,color);
+    &:hover {
+      background: darken($red,10%);
+      border-color: darken($red,10%);
+    }
+    &--alt {
+      text-transform: none;
+      background-color: transparent;
+      background-color: $blue2;
+      border-color: $white;
+      &:hover, &.active {
+        background-color: $white;
+        color: $blue2;
         border-color: $white;
-        &:hover {
-          background-color: $white;
-          color: $blue2;
-          border-color: $white;
-        }
       }
     }
   }
-  
+  .mobile-menu {
+    text-align: right;
+    display: none;
+    max-width: 300px;
+    margin-left: auto;
+    padding: 1.5rem;
+    background-color: $blue2;
+    @include bp-large {
+      display: block;
+      transform: translateY(-100%);
+      @include transition(transform);
+      &.active {
+        transform: translateY(0%);  
+      }
+    }
+    &__links{
+      display: inline-block;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          line-height: normal;
+          font-size: 18px;
+          &:not(:last-child) {
+            margin-bottom: 1em;
+          }
+          a {
+            color: $white;
+            font-weight: bold;
+          }
+          .search-form {
+            fieldset {
+              display: flex;
+              .submit-button {
+                height: $searchHeight;
+                width: $searchHeight;
+                border-radius: 0 4px 4px 0;
+                font-size: 0;
+                line-height: 0;
+                background-color: $red;
+                flex: 1 0 auto;
+                background-image: url('/img/search.svg');
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: auto; 
+                @include transition(background-color);
+                &:hover {
+                  cursor: pointer;
+                  background-color: darken($red,10%);
+                }
+              }
+            }
+          }
+          &#subscribe-tab {
+            
+            .subscribe-dropdown {
+              display: block;
+              position: relative;
+              bottom: unset;
+              transform: translateY(-1rem);
+              transform-origin: top;
+              background-color: transparent;
+              padding: 0;
+              opacity: 0;
+              height: 0;
+              overflow: hidden;
+              @include transition( opacity, transform);
+              &.active {
+                height: 100%;
+                opacity: 1;
+                transform: translateY(0);
+              }
+              &__form {
+                padding-top: 1rem;
+                fieldset {
+                  label {
+                    display: none;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+  .subscribe-dropdown {
+    display: block;
+    transform: translateY(-100%);
+    bottom: 0;
+    background-color: $blue3;
+    padding: 1rem;
+    position: relative;
+    z-index: -1;
+    
+    width: 100%;
+    text-align: right;
+    @include transition(transform);
+    @include bp-large {
+      display: none;
+    }
+    &.active {
+      transform: translateY(0%);
+    }
+    &__body {
+      max-width: $size-x-large;
+      position: relative;
+      margin: auto;
+    }
+    &__form {
+      $button: 36px;
+      display: inline-block;
+      line-height: normal;
+      
+      fieldset {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        label {
+          padding-right: 1rem;
+          color: $white;
+          line-height: normal;
+        }
+        input {
+          border: 0;
+          font-family: inherit;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+          height: $button;
+          width: 189px;
+          max-width: 100%;
+        }
+        button {
+          height: $button;
+          background-color: $red;
+          border-top-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+          @include transition(background-color);
+          &:hover {
+            cursor: pointer;
+            background-color: darken($red,10%);
+          }
+        }
+      }
+      &-success, &-error {
+        color: $white;
+        a {
+          color: $white;
+          font-weight: 700;
+        }
+      }
+      &-success {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
 }
+
+  
+
+
+
