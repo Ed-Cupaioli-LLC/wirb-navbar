@@ -103,6 +103,8 @@ $(".subscribe-dropdown__form").submit(function (e) {
             eventAction: 'Form Submission',
             eventLabel: 'Navbar Email Signup'
           });
+          $(".subscribe-dropdown[data-form='"+form+"']").find(".subscribe-dropdown__form-error").slideUp();
+        $(".subscribe-dropdown[data-form='" + form + "']").find(".subscribe-dropdown__form-error").html('');  
       }
     },
     error: function (data) {
